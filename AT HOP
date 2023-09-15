@@ -1,20 +1,29 @@
-从AT HOP被勒索软件攻击受到的启发
+The cyber incident experienced by Auckland Transport (AT) on 14 September 2023 strongly suggests it was a ransomware attack as their services were severely disrupted. This incident appears to be a recurring issue, as this is the second time in my two months in New Zealand that AT has publicly announced that the system is unavailable. These recurring incidents may indicate potential weaknesses in AT's cybersecurity measures and data security safeguards.
 
-September 14, 2023 ，
-The Auckland Transport (AT) transportation authority in New Zealand is dealing with a widespread outage caused by a cyber incident, impacting a wide range of customer services.
+**Root Cause:**
 
-AT is the government-owned regional transportation authority in the Auckland region, responsible for public transport through ferries, busses, and trains and for designing and building roads and other infrastructure.
+A major factor in such incidents may be inadequate cybersecurity measures to protect AT's critical systems and data. Ransomware attacks often target organizations with vulnerabilities in their cybersecurity infrastructure. Additionally, phishing attacks or malware infections may be an attacker's initial entry point.
 
-The company has announced today that it's experiencing issues with its HOP services (integrated ticketing and fares system) as a cyber incident has impacted parts of its network.
+**Attack Process:**
 
-"The issue is impacting top-ups and other HOP card services. Our staff and operators will ensure you are still able to travel, even if your HOP card is unable to be topped-up." - AT.
-According to the latest update published earlier today, the following AT services have been impacted as a result of the attack:
+The attack appears to follow the typical pattern of ransomware attacks:
 
-Online top-ups, as well as other AT HOP services using MyAT HOP on the AT website.
-Existing auto top-ups work, but there's a delay in the payment processing.
-Ticket and top-up machines are only accepting cash payments.
-Transactions using Eftpos/credit cards are unavailable. Some machines may not be working.
-AT customer service centers will have limited functionality and may only be able to accept cash payments.
-HOP retailers cannot top up HOP cards or process other AT HOP services like loading concessions.
+1. **Initial Compromise:** An attacker may have gained initial access to the AT network via a phishing email or exploited a vulnerability.
+2. **Lateral Movement:** Once inside a network, attackers move laterally to take control of critical systems and data. This may involve escalating access to critical infrastructure.
+3. **Data Encryption:** Attackers deploy ransomware to encrypt important data, making it inaccessible to AT.
+4. **Ransom Demand:** After the data is encrypted, the attacker demands a ransom (usually in the form of cryptocurrency) in exchange for a decryption key.
 
+**Keep Your Data Safe:**
 
+To enhance data security and reduce the risk of future incidents, AT should consider the following key actions:
+
+- Employee training: Conduct regular cybersecurity training and awareness programs for employees to identify and ban phishing attempts and suspicious downloads.
+- Network/Service Segmentation: Implement network segmentation to limit lateral movement within the network and isolate critical systems from less critical systems. Service deployment should also be deployed using remote computer rooms and remote microservice deployment methods.
+- Patch Management: Maintain an effective patch management system to promptly address software vulnerabilities and apply security updates.
+- Node Protection: Invest in a powerful node protection solution to detect and prevent malware infections. This situation can be prevented through the cloud database of the public cloud platform. Generally speaking, the cloud service platform will provide a certain degree of security measures to prevent the server from being attacked.
+- Backup and recovery: Regularly back up critical data and system data, and test the recovery process to ensure business continuity in the event of an attack.
+- Incident response plan: Develop and test an incident response plan to minimize the impact of future attacks and ensure a coordinated response.
+- Security Audits: Conduct regular security audits and assessments to identify vulnerabilities and weaknesses in the network.
+- Collaborate: Collaborate with cybersecurity experts and organizations to stay up to date on the latest threats and best practices.
+
+Preventing ransomware attacks requires a comprehensive approach that includes preventive measures and rapid response strategies to minimize damage and downtime.
