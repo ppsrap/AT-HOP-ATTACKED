@@ -1,0 +1,87 @@
+# `Incident Analysis of Yuque Technical Failure`
+
+[Yuque](https://www.yuque.com/), an enterprise knowledge base tool, is a product of China's Alibaba Group. Similar to Notion applications, it has been widely used in document recording, personal blogs and other fields. On October 23, China time, a serious technical failure occurred. Below I will introduce to you the ins and outs of this failure, learn lessons from other people’s accidents, and learn pitfall avoidance guidelines.
+
+---
+
+## The time point of the failure is summarized as follows:
+
+14:07 The data storage operation and maintenance team received an alarm from the monitoring system and determined that the reason was that the node machine was offline due to a new operation and maintenance tool bug during the storage upgrade;
+14:15 Contact the hardware team to try to bring the offline machine back online;
+15:00 It was confirmed that the storage system used an older machine type and could not be brought online directly. The recovery plan was immediately adjusted to restore storage data from the backup system;
+15:10 Start building a new storage system and restoring data from backup. Due to the large amount of Yuque data, this process takes a long time;
+Data recovery was completed at 19:00. In order to ensure data integrity, it took 2 hours to verify the data after the recovery was completed;
+21:00 The storage system passed the integrity check and began joint debugging with the Yuque team.
+All Yuque services were restored at 22:00, and all user data was not lost.
+
+### 1. 14:07
+
+First of all, at 14:07, the data storage operation and maintenance team received an alarm from the health system and began to locate the problem.
+In my company, as long as there is monitoring means, the fault is discovered independently through the monitoring system, and the fault is reported earlier than the user feedback, no matter how serious the final situation is, the punishment will be mitigated to a certain extent.
+Even for some serious bugs that do not cause serious consequences, because there is monitoring, the monitoring takes effect in a timely manner, and if there is a problem, you will monitor it immediately, and you can be exempted from liability.
+Monitoring, comprehensive, fine-grained, low-noise, high-touch monitoring is very, very important.
+
+### 2. 14:15
+
+
+The operation at this point in time is to "contact the hardware team to try to bring the offline machine back online."
+One image that comes to mind is the team trying to reboot the machine, but failing.
+
+### 3.15:00
+
+From 14:15 to 15:00, there is a 45-minute break.
+
+These 45 minutes were, I think, an extremely exciting 45 minutes.
+
+Because within these 45 minutes, it was determined that the previously formulated plan of "bringing offline machines back online" was unavailable, and unavailability was definitely not a matter of words. The person in charge of the hardware team or some other colleague needed to give Leaders report clearly and discuss new solutions.
+
+Yes, I guess it was only within these 45 minutes that the leader knew that such a big thing had happened, because after the new plan was formulated, he needed to give the leader a synchronized bad news: it will take a long time to complete the implementation of this plan. Optimistically, it will take 3 hours, during these 3 hours, our service will be completely unavailable. And after discussion, we currently only have this option available.
+
+Therefore, within these 45 minutes, several important things happened: the original plan was killed; the new plan was discussed; the implementation of the new plan took too long and the incident had to be escalated to superior leaders; announcements were written and users were synchronized.
+
+Due to bugs in the operation and maintenance tools, the current storage system is no longer functioning. My simple understanding is that the database collapsed, and the entire collapse was scattered. The data inside was "dead and injured", and the cost of resuscitating it was higher than building a new one.
+
+Therefore, the new plan formulated is: restore the stored data from the backup system.
+
+### 4.15:10
+
+The operation and maintenance team officially began to restore data from the backup file.
+
+In the official announcement, it was mentioned that "due to the huge amount of Yuque data", it is unknown to what extent this huge amount has reached. From my humble experience, for a production accident, it is relatively easy to locate and repair the production BUG. The most uncomfortable part is to repair the data problems caused by the BUG.
+I once encountered a production BUG. Due to parameter configuration errors, a string of data across several systems were all calculated incorrectly. Moreover, the magnitude of the data was quite large, and it was also superimposed that the data was still dynamic under normal business conditions. It took me half a month to fix the changed BUFF and correct this batch of data, basically until after 23:00 every day.
+
+From the second week on, my mentality was completely shattered. While working on the data, I muttered: This thing is over, I have to resign, it’s too bad!
+
+### 5.19:00
+
+Recovery started at 15:00 and was completed at 19:00, which took 4 hours.
+After the data repair was completed, what did Yuque do?
+
+Take a look at this sentence in the announcement: To ensure data integrity, it will take 2 hours to verify the data after the recovery is completed.
+
+First of all, I don’t care if they are really performing data verification, or to shorten the time to recover data from the announcement, or if there are actually other steps within this time period, or for other reasons that are inconvenient to disclose, etc., I don’t care. .
+
+I only care about this action: after completing the recovery, it takes 2 hours to perform data verification.
+
+This action is really important. Think about it, if the Yuque team did not do this after the data repair was completed, or just spent a few minutes performing some extremely simple verifications, the user would eventually discover his If the data is lost, it will inevitably set off an even crazier wave of public opinion, leading to more serious user losses and verbal criticism.
+
+So I think that although these two hours are very long, it is a very important step. Even if the final verification result is that there is indeed no data loss, it is still very worthwhile, and the team will have peace of mind.
+
+And when the time has reached 19 o'clock and the machine has been down for 6 hours, the person who is willing to make the decision and spend another 2 hours to verify the data integrity is a team leader.
+
+The next two points in time:
+
+21:00 The storage system passed the integrity check and began joint debugging with the Yuque team.
+All Yuque services were restored at 22:00, and all user data was not lost.
+Yuque once again emphasized that "all user data has not been lost." This is indeed very important. Judging from the feedback from various platforms, there has been no user feedback about data loss.
+
+### 6.Finally regarding improvement measures:
+
+Life-saving motto: can be monitored, can be grayscale, can be rolled back
+Capacity building: Upgrading from multi-copy disaster recovery in the same Region to high-availability capabilities in three centers in two places
+Regular drills: Conduct regular disaster recovery emergency drills.
+
+## Based on this serious technical failure, we can propose that a healthy system must be robust, highly available, monitorable, and reduce unexpected costs.
+
+
+Last updated on 13/10/2023
